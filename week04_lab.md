@@ -484,9 +484,8 @@ class DestinationCard extends StatelessWidget {
 > 3. เขียน Comment สั้น ๆ ในโค้ดของตัวเองอธิบายว่าทำไมต้องใช้ `Positioned` คู่กับ `Stack` ถึงจะย้ายตำแหน่ง Badge ได้ (ถ้าใช้ `Positioned` นอก `Stack` จะเกิดอะไรขึ้น)
 
 บันทึกรูปผลการทดลอง
-```image
-บันทึกรูปโค้ด และรูปผลการทดลองที่นี่ (กรณีที่ยังไม่สามารถรันได้ ให้ทดลองจนถึงขั้นตอนที่สามารถ capture รูปได้และบันทึกรูปไว้ในส่วนนี้)
-```
+<img width="1782" height="436" alt="Screenshot 2026-08-14 133533" src="https://github.com/user-attachments/assets/0ae1f2ea-daeb-4cfb-a3ed-c02f8b73ebe2" />
+
 ---
 
 ### การทดลองที่ 4 — สร้าง Screens
@@ -640,10 +639,10 @@ class _ExploreScreenState extends State<ExploreScreen> {
 > 3. สังเกตว่าค่าทั้งสองตัวเท่ากันหรือไม่ แล้วเขียนสรุป 2-3 บรรทัดเป็น Comment ในโค้ดว่า `MediaQuery.of(context).size.width` (ความกว้างของทั้งหน้าจอ) กับ `LayoutBuilder` `constraints.maxWidth` (ความกว้างที่ Widget นั้น ๆ ได้รับจาก Parent) ต่างกันอย่างไร และควรเลือกใช้ตัวไหนเมื่อไหร่
 
 บันทึกรูปผลการทดลอง
-```image
-บันทึกรูปโค้ด และรูปผลการทดลองที่นี่ (กรณีที่ยังไม่สามารถรันได้ ให้ทดลองจนถึงขั้นตอนที่สามารถ capture รูปได้และบันทึกรูปไว้ในส่วนนี้)
-```
 
+<img width="1919" height="1131" alt="Screenshot 2026-08-14 133550" src="https://github.com/user-attachments/assets/382b5078-67d2-46f6-96bd-decb0b365473" />
+
+----
 #### ขั้นตอนที่ 4.2 — Destination Detail Screen
 
 สร้างไฟล์ `lib/screens/destination_detail_screen.dart`:
@@ -1103,9 +1102,12 @@ class _StatCard extends StatelessWidget {
 > 3. เขียน Comment อธิบายว่าทำไมต้องใส่ `shrinkWrap: true` และ `NeverScrollableScrollPhysics()` เมื่อวาง `ListView` ซ้อนอยู่ใน `Column` ที่อยู่ใน `SingleChildScrollView` อีกที (จะเกิดอะไรขึ้นถ้าไม่ใส่)
 
 บันทึกรูปผลการทดลอง
-```image
-บันทึกรูปโค้ด และรูปผลการทดลองที่นี่ (กรณีที่ยังไม่สามารถรันได้ ให้ทดลองจนถึงขั้นตอนที่สามารถ capture รูปได้และบันทึกรูปไว้ในส่วนนี้)
-```
+
+<img width="1919" height="1134" alt="Screenshot 2026-08-14 133613" src="https://github.com/user-attachments/assets/0fc46257-81e6-4d8a-975a-ec26abb24d95" />
+<img width="1919" height="493" alt="Screenshot 2026-08-14 133619" src="https://github.com/user-attachments/assets/5a99155b-e034-4869-8a6a-c84c5bfbddb1" />
+
+
+----
 
 สร้างไฟล์ `lib/screens/saved_screen.dart`:
 
@@ -1356,10 +1358,10 @@ final GoRouter appRouter = GoRouter(
 > 3. ทดสอบ Fallback ที่แก้ไข โดยรันแอปบน Chrome (`flutter run -d chrome`) แล้วพิมพ์ URL `/explore/destinations/999` ตรง ๆ ใน Address Bar (เป็น `id` ที่ไม่มีอยู่จริง) — ต้องเห็นหน้า "ไม่พบข้อมูลที่ต้องการ" ไม่ใช่ Error สีแดงหรือข้อมูลผิดตัว
 
 บันทึกรูปผลการทดลอง
-```image
-บันทึกรูปโค้ด และรูปผลการทดลองที่นี่ (กรณีที่ยังไม่สามารถรันได้ ให้ทดลองจนถึงขั้นตอนที่สามารถ capture รูปได้และบันทึกรูปไว้ในส่วนนี้)
-```
 
+<img width="1919" height="1134" alt="Screenshot 2026-08-14 133638" src="https://github.com/user-attachments/assets/4ce4b0a3-c758-402f-8738-32e273a77c25" />
+
+-----
 
 #### ขั้นตอนที่ 5.2 — ตั้งค่า main.dart
 
@@ -1547,9 +1549,10 @@ GoRoute(
 > 💡 **หลีกเลี่ยงการขอโค้ดทั้งไฟล์จาก AI** ให้ลองเขียนเองก่อน ถ้าติดจริง ๆ ให้ถามเป็นจุด ๆ ไป (เช่น "ทำไม setState ใน Widget อื่นไม่ทำให้ Saved Screen รีเฟรช") จะได้เรียนรู้มากกว่าการคัดลอกมาทั้งหมด
 
 บันทึกรูปผลการทดลอง
-```image
-บันทึกรูปโค้ด และรูปผลการทดลองที่นี่ 
-```
+
+<img width="1919" height="1132" alt="Screenshot 2026-08-14 133733" src="https://github.com/user-attachments/assets/d0a45472-871c-4fb1-bf6f-2f86e1750e45" />
+<img width="1919" height="1131" alt="Screenshot 2026-08-14 133745" src="https://github.com/user-attachments/assets/4f09ff25-0b7c-4155-8709-614c05811d42" />
+
 ---
 
 ## 📝 คำถามท้ายใบงาน
