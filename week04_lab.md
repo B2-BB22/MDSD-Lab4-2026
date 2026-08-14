@@ -1437,23 +1437,23 @@ flutter devices
 
 ทดสอบตามรายการและบันทึกผลการทดลองด้วยเครื่องหมาย ✅ หรือ ❌:
 
-| # | สิ่งที่ทดสอบ | ผลที่คาดหวัง | ผลจริง |
-|---|---|---|---|
-| 1 | เปิดแอป | เห็น Home Screen + Bottom Navigation Bar | |
-| 2 | กด Tab "สำรวจ" | เปลี่ยนไป Explore Screen แสดง Grid | |
-| 3 | พิมพ์ค้นหา "โตเกียว" | ผลการค้นหาเหลือเฉพาะโตเกียว | |
-| 4 | กดที่ Card ใด ๆ | เปิด Detail Screen พร้อมข้อมูลถูกต้อง | |
-| 5 | กด Back บน Detail | กลับมา Explore Screen | |
-| 6 | กด Tab "หน้าหลัก" | กลับหน้าหลัก โดยที่ Stack ใน Explore ยังไม่หาย | |
-| 7 | กดหัวใจบน Detail | Snackbar แจ้งบันทึกสำเร็จ | |
-| 8 | กด "จองเลย" บน Detail | Dialog แสดงการจองสำเร็จ | |
-| 9 | กด "กลับหน้าหลัก" ใน Dialog | Navigate กลับ Home | |
-| 10 | ปรับความกว้างหน้าจอ (ดูวิธีตาม Device ด้านล่าง) | Grid ปรับ Column Count ตาม M3 Breakpoint | |
-| 11 | Refresh หน้า Detail บน Chrome (กด `F5` ขณะอยู่ที่หน้ารายละเอียด) | ข้อมูล Destination ยังแสดงถูกต้อง ไม่ใช่ null/Error (Fallback ทำงาน) | |
-| 12 | เลื่อนดู Featured List แนวนอนบนหน้า Home (หลังทำ Checkpoint 4.3) | เห็นครบทุก Destination เลื่อนซ้าย-ขวาได้ลื่นไหล | |
-| 13 | พิมพ์ URL `/explore/destinations/999` ตรง ๆ (หลังทำ Checkpoint 5.1) | แสดงหน้า "ไม่พบข้อมูลที่ต้องการ" ไม่ใช่ Error สีแดง | |
-| 14 | กด Tab "เกี่ยวกับ" ที่เพิ่มใหม่ (หลังทำ Checkpoint 5.1) | เปลี่ยนไปหน้า AboutScreen ได้ | |
-| 15 | เทียบค่า `MediaQuery.size.width` กับ `constraints.maxWidth` (ตาม Checkpoint 4.1) | บันทึกค่าที่สังเกตได้และสรุปความแตกต่าง | |
+| #   | สิ่งที่ทดสอบ                                                                     | ผลที่คาดหวัง                                                         | ผลจริง |
+| --- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------- | ------ |
+| 1   | เปิดแอป                                                                          | เห็น Home Screen + Bottom Navigation Bar                             | ✅      |
+| 2   | กด Tab "สำรวจ"                                                                   | เปลี่ยนไป Explore Screen แสดง Grid                                   | ✅      |
+| 3   | พิมพ์ค้นหา "โตเกียว"                                                             | ผลการค้นหาเหลือเฉพาะโตเกียว                                          | ✅      |
+| 4   | กดที่ Card ใด ๆ                                                                  | เปิด Detail Screen พร้อมข้อมูลถูกต้อง                                | ✅      |
+| 5   | กด Back บน Detail                                                                | กลับมา Explore Screen                                                | ✅      |
+| 6   | กด Tab "หน้าหลัก"                                                                | กลับหน้าหลัก โดยที่ Stack ใน Explore ยังไม่หาย                       | ✅      |
+| 7   | กดหัวใจบน Detail                                                                 | Snackbar แจ้งบันทึกสำเร็จ                                            | ✅      |
+| 8   | กด "จองเลย" บน Detail                                                            | Dialog แสดงการจองสำเร็จ                                              | ✅      |
+| 9   | กด "กลับหน้าหลัก" ใน Dialog                                                      | Navigate กลับ Home                                                   | ✅      |
+| 10  | ปรับความกว้างหน้าจอ (ดูวิธีตาม Device ด้านล่าง)                                  | Grid ปรับ Column Count ตาม M3 Breakpoint                             | ✅      |
+| 11  | Refresh หน้า Detail บน Chrome (กด `F5` ขณะอยู่ที่หน้ารายละเอียด)                 | ข้อมูล Destination ยังแสดงถูกต้อง ไม่ใช่ null/Error (Fallback ทำงาน) | ✅      |
+| 12  | เลื่อนดู Featured List แนวนอนบนหน้า Home (หลังทำ Checkpoint 4.3)                 | เห็นครบทุก Destination เลื่อนซ้าย-ขวาได้ลื่นไหล                      | ✅      |
+| 13  | พิมพ์ URL `/explore/destinations/999` ตรง ๆ (หลังทำ Checkpoint 5.1)              | แสดงหน้า "ไม่พบข้อมูลที่ต้องการ" ไม่ใช่ Error สีแดง                  | ✅      |
+| 14  | กด Tab "เกี่ยวกับ" ที่เพิ่มใหม่ (หลังทำ Checkpoint 5.1)                          | เปลี่ยนไปหน้า AboutScreen ได้                                        | ✅      |
+| 15  | เทียบค่า `MediaQuery.size.width` กับ `constraints.maxWidth` (ตาม Checkpoint 4.1) | บันทึกค่าที่สังเกตได้และสรุปความแตกต่าง                              | ✅      |
 
 ---
 
@@ -1558,23 +1558,51 @@ GoRoute(
 
 1. `LayoutBuilder` ต่างกับ `MediaQuery` อย่างไร? มีหลักการเลือกใช้แต่ละแบบในสถานการณ์ใด?
 ```text
+หลักการเลือกใช้ MediaQuery: ใช้เมื่อต้องการตัดสินใจเชิงโครงสร้างใหญ่ของทั้งหน้าจอ เช่น สลับระหว่าง BottomNavigationBar กับ NavigationRail 
 
+หลักการเลือกใช้ LayoutBuilder: ใช้เมื่อต้องการทำ Responsive ให้กับ Widget ย่อยในพื้นที่ที่จำกัด เช่น ปรับ Layout ของ Card เมื่อถูกนำไปวางใน Sidebar เทียบกับวางใน Body หลัก
 ```
 2. ทำไม Go Router ถึงใช้ `StatefulShellRoute` แทน `ShellRoute` ธรรมดา? ผลต่างเรื่อง State Management คืออะไร?
 ```text
+ShellRoute : ทุกครั้งที่มีการสลับ Tab ระบบจะทำการ **Destroy (Dispose)** หน้าเก่าทิ้ง แล้วสร้างหน้าใหม่ขึ้นมาใหม่เสมอ ส่งผลให้ State ของหน้านั้นๆ หายไป (เช่น ตำแหน่งการ Scroll, ข้อมูลที่พิมพ์ค้างไว้ในช่อง Search, หรือ State ภายใน Widget)
 
+StatefulShellRoute: ใช้หลักการของ IndexedStack ในการจัดการแต่ละ Branch ทำให้ออพเจกต์และ State ของทุก Tab ถูก รักษาสภาพไว้ใน Memory (Preserve State) แม้จะสลับไป Tab อื่น แล้วกดกลับมา หน้าเดิมก็ยังคงสภาพเดิมอยู่ทุกประการ (Scroll อยู่ที่เดิม, ค้นหาค้างไว้ที่เดิม)
 ```
 3. ในโค้ด `DestinationCard` เหตุใดจึงใช้ `Expanded` ครอบ `Text` ชื่อ Destination ? จะเกิดอะไรขึ้นถ้าลบออก?
 ```text
+เหตุผลที่ต้องใช้ Expanded: เนื่องจาก Text อยู่ภายใน Row การครอบด้วย Expanded จะเป็นการบีบให้ Text ใช้พื้นที่เฉพาะส่วนที่เหลือใน Row เท่านั้น ไม่ให้ขยายกว้างจนเกินขอบ
 
+หากลบ Expanded ออก: เมื่อชื่อสถานที่ยาวเกินไป (เช่น "เชียงใหม่ เมืองแห่งธรรมชาติและวัฒนธรรม") Row จะไม่รู้ขอบเขตความกว้าง และจะพยายามดันข้อความออกไปเรื่อยๆ จนเกินความกว้างของการ์ด ทำให้เกิด Error RenderFlex overflowed by xxx pixels (เกิดแถบลายเสือสีเหลือง-ดำเตือนขอบเกิน)
 ```
 4. การส่งข้อมูลผ่าน `extra` ของ Go Router มีข้อจำกัดอะไรกรณี Deep Link / Web Refresh? และแก้ปัญหานี้ได้อย่างไร?
 ```text
+ข้อจำกัด: `extra` เป็นการส่ง Object ผ่าน In-memory State ระหว่างการเปิดหน้าภายในแอป หากผู้ใช้ทำการ Refresh หน้าเว็บ (F5) หรือเข้าผ่าน Deep Link / Direct URL ตรงๆ Navigation Stack เดิมจะหายไป ทำให้ค่า extra กลายเป็น null ทันที ส่งผลให้เกิด Error หากไม่มีการรับมือ
 
+วิธีแก้ปัญหา: 
+1. ต้องส่ง Path Parameters (เช่น /destinations/:id) กำกับไปกับ URL เสมอ
+2. เขียน Fallback Logic ใน Route Builder: ตรวจสอบก่อนว่า extra เป็น null หรือไม่ หากเป็น null ให้เอา id จาก pathParameters ไปดึงข้อมูลใหม่จาก Repository / Sample Data
 ```
 5. วาด Navigation Hierarchy ของแอปนี้ (สามารถวาดบนกระดาษแล้วถ่ายรูปส่งได้)
 ```text
-
+GoRouter (Root Router)
+│
+└── StatefulShellRoute.indexedStack (ScaffoldWithNavBar)
+    │
+    ├── Branch 0: [/]
+    │   └── HomeScreen
+    │
+    ├── Branch 1: [/explore]
+    │   └── ExploreScreen
+    │       └── [sub-route] destinations/:id ──> DestinationDetailScreen
+    │
+    ├── Branch 2: [/saved]
+    │   └── SavedScreen
+    │
+    ├── Branch 3: [/profile]
+    │   └── ProfileScreen
+    │
+    └── Branch 4: [/about]
+        └── AboutScreen
 ```
 ---
 
