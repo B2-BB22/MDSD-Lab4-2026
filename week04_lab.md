@@ -485,7 +485,18 @@ class DestinationCard extends StatelessWidget {
 
 บันทึกรูปผลการทดลอง
 <img width="1782" height="436" alt="Screenshot 2026-08-14 133533" src="https://github.com/user-attachments/assets/0ae1f2ea-daeb-4cfb-a3ed-c02f8b73ebe2" />
-
+```
+// ── [Checkpoint 3 Comment] ───────────────────────────────────────────
+// สาเหตุที่ต้องใช้ Positioned คู่กับ Stack:
+// Stack เป็น Widget ที่จัดวางเลเยอร์ของ Child วางซ้อนทับกันในแนวแกน Z (Depth) 
+// โดย Positioned ทำหน้าที่กำหนดตำแหน่งพิกัด (เช่น top, bottom, left, right) ของ Widget ลูก
+// สัมพันธ์กับขอบของ Stack Parent นั้นๆ โดยเฉพาะ
+//
+// หากใช้ Positioned นอก Stack (เช่น วางใน Column หรือ Row) 
+// Flutter จะเกิด Runtime Error แจ้งว่า "Positioned widgets must be placed directly inside a Stack widget" 
+// เนื่องจาก Column/Row จัดวางแนวตั้ง-แนวนอนแบบ Flex จึงไม่รู้จักพิกัดการวางซ้อนของ Positioned
+// ─────────────────────────────────────────────────────────────────────
+```
 ---
 
 ### การทดลองที่ 4 — สร้าง Screens
@@ -642,7 +653,24 @@ class _ExploreScreenState extends State<ExploreScreen> {
 
 <img width="1919" height="1131" alt="Screenshot 2026-08-14 133550" src="https://github.com/user-attachments/assets/382b5078-67d2-46f6-96bd-decb0b365473" />
 
-----
+```
+[Checkpoint 4.1 Comment] 
+สรุปความแตกต่างระหว่าง MediaQuery และ LayoutBuilder constraints:
+1. MediaQuery.of(context).size.width : วัดความกว้างรวมทั้งหมดของ "หน้าจออุปกรณ์"
+(Global Screen)
+
+2. constraints.maxWidth : วัดความกว้างสูงสุดที่ "Parent Widget" เหลือพื้นที่ไว้ให้เรนเดอร์จริง
+(Local Constraint)
+
+การเลือกใช้งาน: 
+ใช้ MediaQuery เมื่อต้องการปรับโครงสร้างใหญ่ระดับ Screen
+เช่น สลับ BottomNavigationBar กับ NavigationRail
+
+ใช้ LayoutBuilder เมื่อต้องการทำ Responsive ระดับ Component ให้ปรับตัวตามพื้นที่ว่างจริง
+เช่น การคำนวณ crossAxisCount ของ GridView
+
+```
+
 #### ขั้นตอนที่ 4.2 — Destination Detail Screen
 
 สร้างไฟล์ `lib/screens/destination_detail_screen.dart`:
@@ -1106,8 +1134,23 @@ class _StatCard extends StatelessWidget {
 <img width="1919" height="1134" alt="Screenshot 2026-08-14 133613" src="https://github.com/user-attachments/assets/0fc46257-81e6-4d8a-975a-ec26abb24d95" />
 <img width="1919" height="493" alt="Screenshot 2026-08-14 133619" src="https://github.com/user-attachments/assets/5a99155b-e034-4869-8a6a-c84c5bfbddb1" />
 
+```
 
-----
+[Checkpoint 4.3 Comment] 
+ สาเหตุที่ต้องใส่ shrinkWrap: true และ NeverScrollableScrollPhysics():
+
+1. shrinkWrap: true 
+บังคับให้ ListView คำนวณความสูงตามจำนวน Item จริงที่มีอยู่ 
+(หากไม่ใส่ ListView จะพยายามขยายความสูงเป็น Infinity ซึ่งขัดแย้งกับ Column
+ทำให้เกิด Error "Vertical viewport was given unbounded height")
+
+ 2. physics: const NeverScrollableScrollPhysics() 
+สั่งปิดระบบ Scroll ของตัว ListView เอง เพื่อให้ SingleChildScrollView
+ด้านนอกสุดทำหน้าที่ Scroll ทั้งหน้าแต่เพียงผู้เดียว
+(หากไม่ใส่ จะเกิดอาการ Scroll ติดขัดหรืออาการ Scrollbar ซ้อนกันสองอัน)
+ 
+```
+
 
 สร้างไฟล์ `lib/screens/saved_screen.dart`:
 
@@ -1553,6 +1596,69 @@ GoRoute(
 <img width="1919" height="1132" alt="Screenshot 2026-08-14 133733" src="https://github.com/user-attachments/assets/d0a45472-871c-4fb1-bf6f-2f86e1750e45" />
 <img width="1919" height="1131" alt="Screenshot 2026-08-14 133745" src="https://github.com/user-attachments/assets/4f09ff25-0b7c-4155-8709-614c05811d42" />
 
+```
+import 'package:flutter/foundation.dart';
+
+/// [COMMENT 1: ความซับซ้อนของการจัดการ State ข้ามหน้าโดยไม่ใช้ Library]
+/// ใช้ ValueNotifier<Set<String>> ทำหน้าที่เป็น Global Reactive State
+/// เพื่อเก็บ ID สถานที่ที่ถูกบันทึกไว้ในรูปแบบ Set (ป้องกัน ID ซ้ำ)
+/// เมื่อมีการกด toggleSave() ตัว ValueNotifier จะทำการส่งสัญญาณแจ้งเตือน (Notify) 
+/// ไปยัง ValueListenableBuilder ในทุกๆ หน้า (Explore, Detail, Saved) ให้ Rebuild UI พร้อมกันทันที
+class SavedManager {
+  static final ValueNotifier<Set<String>> savedIdsNotifier =
+      ValueNotifier<Set<String>>({});
+
+  static bool isSaved(String id) {
+    return savedIdsNotifier.value.contains(id);
+  }
+
+  static void toggleSave(String id) {
+    final currentSet = Set<String>.from(savedIdsNotifier.value);
+    if (currentSet.contains(id)) {
+      currentSet.remove(id);
+    } else {
+      currentSet.add(id);
+    }
+    savedIdsNotifier.value = currentSet;
+  }
+}
+```
+```
+/// [COMMENT 2]: ใช้ LayoutBuilder เพื่ออ่านค่า constraints.maxWidth ของพื้นที่หน้าจอจริง
+/// จากนั้นคำนวณปรับจำนวนคอลัมน์ (crossAxisCount) ให้เหมาะสมตามขนาดหน้าจอ (Responsive Breakpoint)
+/// ช่วยให้การ์ดจัดวางสวยงามทั้งบนสมาร์ตโฟน แท็บเล็ต และหน้าจอเดสก์ท็อป
+return LayoutBuilder(
+  builder: (context, constraints) {
+    int crossAxisCount = 1;
+    if (constraints.maxWidth >= 900) {
+      crossAxisCount = 3;
+    } else if (constraints.maxWidth >= 600) {
+      crossAxisCount = 2;
+    }
+
+    return GridView.builder(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: crossAxisCount,
+        crossAxisSpacing: 16,
+        mainAxisSpacing: 16,
+        childAspectRatio: 0.68,
+      ),
+      itemCount: savedDestinations.length,
+      itemBuilder: (context, index) { ... },
+    );
+  },
+);
+```
+```
+/// [COMMENT 3]: นำทางไปยังหน้า Detail โดยใช้ context.pushNamed
+/// พร้อมส่ง pathParameters เพื่อให้รองรับ Deep Link/Web Refresh 
+/// และส่ง extra object เพื่อประสิทธิภาพในการโหลดข้อมูลโดยไม่ต้อง Query ใหม่
+  context.pushNamed(
+    'destination-detail',
+    pathParameters: {'id': dest.id},
+    extra: dest,
+  );
+```
 ---
 
 ## 📝 คำถามท้ายใบงาน
