@@ -1558,29 +1558,39 @@ GoRoute(
 
 1. `LayoutBuilder` ต่างกับ `MediaQuery` อย่างไร? มีหลักการเลือกใช้แต่ละแบบในสถานการณ์ใด?
 ```text
-หลักการเลือกใช้ MediaQuery: ใช้เมื่อต้องการตัดสินใจเชิงโครงสร้างใหญ่ของทั้งหน้าจอ เช่น สลับระหว่าง BottomNavigationBar กับ NavigationRail 
+หลักการเลือกใช้ MediaQuery: ใช้เมื่อต้องการตัดสินใจเชิงโครงสร้างใหญ่ของทั้งหน้าจอ
+เช่น สลับระหว่าง BottomNavigationBar กับ NavigationRail 
 
-หลักการเลือกใช้ LayoutBuilder: ใช้เมื่อต้องการทำ Responsive ให้กับ Widget ย่อยในพื้นที่ที่จำกัด เช่น ปรับ Layout ของ Card เมื่อถูกนำไปวางใน Sidebar เทียบกับวางใน Body หลัก
+หลักการเลือกใช้ LayoutBuilder: ใช้เมื่อต้องการทำ Responsive ให้กับ Widget ย่อยในพื้นที่ที่จำกัด
+เช่น ปรับ Layout ของ Card เมื่อถูกนำไปวางใน Sidebar เทียบกับวางใน Body หลัก
 ```
 2. ทำไม Go Router ถึงใช้ `StatefulShellRoute` แทน `ShellRoute` ธรรมดา? ผลต่างเรื่อง State Management คืออะไร?
 ```text
-ShellRoute : ทุกครั้งที่มีการสลับ Tab ระบบจะทำการ **Destroy (Dispose)** หน้าเก่าทิ้ง แล้วสร้างหน้าใหม่ขึ้นมาใหม่เสมอ ส่งผลให้ State ของหน้านั้นๆ หายไป (เช่น ตำแหน่งการ Scroll, ข้อมูลที่พิมพ์ค้างไว้ในช่อง Search, หรือ State ภายใน Widget)
+ShellRoute : ทุกครั้งที่มีการสลับ Tab ระบบจะทำการ Destroy (Dispose) หน้าเก่าทิ้ง แล้วสร้างหน้าใหม่ขึ้นมาใหม่เสมอ
+ส่งผลให้ State ของหน้านั้นๆ หายไป (เช่น ตำแหน่งการ Scroll, ข้อมูลที่พิมพ์ค้างไว้ในช่อง Search, หรือ State ภายใน Widget)
 
-StatefulShellRoute: ใช้หลักการของ IndexedStack ในการจัดการแต่ละ Branch ทำให้ออพเจกต์และ State ของทุก Tab ถูก รักษาสภาพไว้ใน Memory (Preserve State) แม้จะสลับไป Tab อื่น แล้วกดกลับมา หน้าเดิมก็ยังคงสภาพเดิมอยู่ทุกประการ (Scroll อยู่ที่เดิม, ค้นหาค้างไว้ที่เดิม)
+StatefulShellRoute: ใช้หลักการของ IndexedStack ในการจัดการแต่ละ Branch ทำให้ออพเจกต์และ State ของทุก Tab ถูก
+รักษาสภาพไว้ใน Memory (Preserve State) แม้จะสลับไป Tab อื่น แล้วกดกลับมา หน้าเดิมก็ยังคงสภาพเดิมอยู่ทุกประการ
+(Scroll อยู่ที่เดิม, ค้นหาค้างไว้ที่เดิม)
 ```
 3. ในโค้ด `DestinationCard` เหตุใดจึงใช้ `Expanded` ครอบ `Text` ชื่อ Destination ? จะเกิดอะไรขึ้นถ้าลบออก?
 ```text
-เหตุผลที่ต้องใช้ Expanded: เนื่องจาก Text อยู่ภายใน Row การครอบด้วย Expanded จะเป็นการบีบให้ Text ใช้พื้นที่เฉพาะส่วนที่เหลือใน Row เท่านั้น ไม่ให้ขยายกว้างจนเกินขอบ
+เหตุผลที่ต้องใช้ Expanded: เนื่องจาก Text อยู่ภายใน Row การครอบด้วย Expanded จะเป็นการบีบให้ Text
+ใช้พื้นที่เฉพาะส่วนที่เหลือใน Row เท่านั้น ไม่ให้ขยายกว้างจนเกินขอบ
 
-หากลบ Expanded ออก: เมื่อชื่อสถานที่ยาวเกินไป (เช่น "เชียงใหม่ เมืองแห่งธรรมชาติและวัฒนธรรม") Row จะไม่รู้ขอบเขตความกว้าง และจะพยายามดันข้อความออกไปเรื่อยๆ จนเกินความกว้างของการ์ด ทำให้เกิด Error RenderFlex overflowed by xxx pixels (เกิดแถบลายเสือสีเหลือง-ดำเตือนขอบเกิน)
+หากลบ Expanded ออก: เมื่อชื่อสถานที่ยาวเกินไป (เช่น "เชียงใหม่ เมืองแห่งธรรมชาติและวัฒนธรรม") Row จะไม่รู้ขอบเขตความกว้าง
+และจะพยายามดันข้อความออกไปเรื่อยๆ จนเกินความกว้างของการ์ด ทำให้เกิด Error RenderFlex overflowed by xxx pixels
+(เกิดแถบลายเสือสีเหลือง-ดำเตือนขอบเกิน)
 ```
 4. การส่งข้อมูลผ่าน `extra` ของ Go Router มีข้อจำกัดอะไรกรณี Deep Link / Web Refresh? และแก้ปัญหานี้ได้อย่างไร?
 ```text
-ข้อจำกัด: `extra` เป็นการส่ง Object ผ่าน In-memory State ระหว่างการเปิดหน้าภายในแอป หากผู้ใช้ทำการ Refresh หน้าเว็บ (F5) หรือเข้าผ่าน Deep Link / Direct URL ตรงๆ Navigation Stack เดิมจะหายไป ทำให้ค่า extra กลายเป็น null ทันที ส่งผลให้เกิด Error หากไม่มีการรับมือ
+ข้อจำกัด: extra เป็นการส่ง Object ผ่าน In-memory State ระหว่างการเปิดหน้าภายในแอป หากผู้ใช้ทำการ Refresh หน้าเว็บ (F5)
+หรือเข้าผ่าน Deep Link / Direct URL ตรงๆ Navigation Stack เดิมจะหายไป ทำให้ค่า extra กลายเป็น null ทันที ส่งผลให้เกิด Error หากไม่มีการรับมือ
 
 วิธีแก้ปัญหา: 
 1. ต้องส่ง Path Parameters (เช่น /destinations/:id) กำกับไปกับ URL เสมอ
-2. เขียน Fallback Logic ใน Route Builder: ตรวจสอบก่อนว่า extra เป็น null หรือไม่ หากเป็น null ให้เอา id จาก pathParameters ไปดึงข้อมูลใหม่จาก Repository / Sample Data
+2. เขียน Fallback Logic ใน Route Builder: ตรวจสอบก่อนว่า extra เป็น null
+หรือไม่ หากเป็น null ให้เอา id จาก pathParameters ไปดึงข้อมูลใหม่จาก Repository / Sample Data
 ```
 5. วาด Navigation Hierarchy ของแอปนี้ (สามารถวาดบนกระดาษแล้วถ่ายรูปส่งได้)
 ```text
